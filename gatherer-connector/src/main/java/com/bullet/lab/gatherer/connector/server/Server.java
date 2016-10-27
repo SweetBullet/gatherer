@@ -1,4 +1,4 @@
-package server;
+package com.bullet.lab.gatherer.connector.server;
 
 import io.netty.channel.Channel;
 

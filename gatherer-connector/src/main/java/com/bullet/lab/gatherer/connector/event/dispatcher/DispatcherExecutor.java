@@ -1,8 +1,8 @@
-package event.dispatcher;
+package com.bullet.lab.gatherer.connector.event.dispatcher;
 
-import event.EventContext;
-import event.EventType;
-import event.handler.EventHandler;
+import com.bullet.lab.gatherer.connector.event.EventContext;
+import com.bullet.lab.gatherer.connector.event.EventType;
+import com.bullet.lab.gatherer.connector.event.processor.EventProcessor;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,23 +18,27 @@ public class DispatcherExecutor implements Dispatcher {
 
     private static final Logger logger = LoggerFactory.getLogger(DispatcherExecutor.class);
 
-    private final Dispatcher next=new EventDispatcher();
+    private final Dispatcher next;
 
     private static final int DEFAULT_THREAD_POOL_SIZE = 16;
+
+    public DispatcherExecutor() {
+        next = new EventDispatcher();
+    }
 
     private final ExecutorService executor = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE
             , 0, TimeUnit.SECONDS, new LinkedBlockingQueue<>()
             , new BasicThreadFactory.Builder().namingPattern("connector-event-dispatcher-%d").build());
 
     @Override
-    public void register(EventType eventType, EventHandler eventHandler) {
-        next.register(eventType,eventHandler);
+    public void register(EventType eventType, EventProcessor eventProcessor) {
+        next.register(eventType, eventProcessor);
     }
 
     @Override
     public void dispatch(EventType eventType, EventContext eventContext) {
-        executor.execute(()->
-        next.dispatch(eventType,eventContext));
+        executor.execute(() ->
+                next.dispatch(eventType, eventContext));
     }
 
     @Override
@@ -56,20 +60,20 @@ public class DispatcherExecutor implements Dispatcher {
 
     private static class EventDispatcher implements Dispatcher {
 
-        private final Map<EventType, EventHandler> handlers = new ConcurrentHashMap<>();
+        private final Map<EventType, EventProcessor> handlers = new ConcurrentHashMap<>();
 
 
         @Override
-        public void register(EventType eventType, EventHandler eventHandler) {
-            handlers.put(eventType, eventHandler);
-            logger.info("register event handler:{}",eventType);
+        public void register(EventType eventType, EventProcessor eventProcessor) {
+            handlers.put(eventType, eventProcessor);
+            logger.info("register event handler:{}", eventType);
         }
 
         @Override
         public void dispatch(EventType eventType, EventContext eventContext) {
-            handlers.getOrDefault(eventType,(context)->
-                    logger.warn("unexpected eventType type:{}",eventType)
-            );
+            handlers.getOrDefault(eventType, (context) ->
+                    logger.warn("unexpected eventType type:{}", eventType)
+            ).process(eventContext);
         }
 
         @Override

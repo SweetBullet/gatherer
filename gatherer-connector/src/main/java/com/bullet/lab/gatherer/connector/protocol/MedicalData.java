@@ -1,4 +1,4 @@
-package protocol;
+package com.bullet.lab.gatherer.connector.protocol;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

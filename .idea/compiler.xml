@@ -30,9 +30,9 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="gatherer" target="1.5" />
-      <module name="gatherer-api" target="1.5" />
-      <module name="gatherer-connector" target="1.5" />
-      <module name="gatherer-dao" target="1.5" />
+      <module name="gatherer-api" target="1.8" />
+      <module name="gatherer-connector" target="1.8" />
+      <module name="gatherer-dao" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

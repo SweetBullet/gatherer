@@ -1,4 +1,4 @@
-package transmiter;
+package com.bullet.lab.gatherer.connector.deliver;
 
 import io.netty.channel.Channel;
 
@@ -7,7 +7,7 @@ import java.io.Closeable;
 /**
  * Created by pudongxu on 16/10/26.
  */
-public interface Transmiter<T> extends Closeable{
+public interface Deliver<T> extends Closeable{
 
     Channel start();
 
