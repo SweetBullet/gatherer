@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bullet.lab.gatherer.dao.MedicalDataDao">
+
+    <resultMap id="medicalDataMap" type="com.bullet.lab.gatherer.dao.entity.MedicalDataEntity">
+        <result property="name" column="patient_name"/>
+        <result property="phone" column="phone_number"/>
+        <result property="age" column="age"/>
+    </resultMap>
+
+
+    <insert id="insertMedicalData" parameterType="com.bullet.lab.gatherer.dao.entity.MedicalDataEntity"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into medical_data(patient_name,phone_number,age)
+         values(#{name},#{phone},#{age})
+         ON DUPLICATE KEY UPDATE age = #{age}
+    </insert>
+
+    <select id="getMedicalData" parameterType="int" resultMap="medicalDataMap">
+        select patient_name, phone_number, age from medical_data
+        where id = #{id}
+    </select>
+
+    <!--<select id="getStatisticRecordDOs" parameterType="java.lang.String" resultMap="statisticRecordMap">-->
+        <!--select statistic_date, channel_name, total_success, total_fail, total_request from sms_pusher_statistic-->
+        <!--where statistic_date = #{statisticDate}-->
+    <!--</select>-->
+
+
+</mapper>

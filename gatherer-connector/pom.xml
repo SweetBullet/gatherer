@@ -12,6 +12,13 @@
     <artifactId>gatherer-connector</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.bullet.lab</groupId>
+            <artifactId>gatherer-dao</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
         <!--netty-->
         <dependency>
             <groupId>io.netty</groupId>

@@ -11,7 +11,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.bullet.lab.gatherer.connector.protocol.MedicalData;
+import com.bullet.lab.gatherer.connector.base.pojo.MedicalData;
 
 import java.net.URI;
 import java.util.HashMap;

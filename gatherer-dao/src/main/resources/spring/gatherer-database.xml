@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+  <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+        init-method="init" destroy-method="close">
+    <property name="url" value="${dataSource.jdbc.url}"/>
+    <property name="username" value="${dataSource.jdbc.username}"/>
+    <property name="password" value="${dataSource.jdbc.password}"/>
+    <!-- 初始化连接大小 -->
+    <property name="initialSize" value="3"/>
+    <!-- 连接池最大数量 -->
+    <property name="maxActive" value="30"/>
+    <!-- 连接池最小空闲 -->
+    <property name="minIdle" value="3"/>
+    <!-- 获取连接最大等待时间 -->
+    <property name="maxWait" value="6000"/>
+    <property name="removeAbandonedTimeout" value="180"/>
+    <property name="testWhileIdle" value="true"/>
+    <property name="testOnBorrow" value="true"/>
+    <property name="testOnReturn" value="false"/>
+    <property name="validationQuery" value="SELECT 1"/>
+    <property name="validationQueryTimeout" value="1"/>
+    <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+    <property name="minEvictableIdleTimeMillis" value="120000"/>
+    <property name="poolPreparedStatements" value="true"/>
+    <property name="defaultAutoCommit" value="true"/>
+    <property name="filters" value="stat,slf4j"/>
+  </bean>
+
+  <!-- myBatis 配置 -->
+  <bean id="defaultSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+    <!-- mybatis typeAliases 自动扫描 -->
+    <!--<property name="typeAliasesPackage" value="com.youzan.platform.sms.service.dal.dataobject"/>-->
+  </bean>
+
+
+  <!-- 事务配置 -->
+  <bean id="defaultTx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+  <bean id="defaultTxTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+    <property name="transactionManager" ref="defaultTx"/>
+  </bean>
+  <!-- 使用annotation定义事务 -->
+  <tx:annotation-driven transaction-manager="defaultTx" proxy-target-class="true"/>
+
+
+  <bean id="medicalDataDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.bullet.lab.gatherer.dao.MedicalDataDao"/>
+    <property name="sqlSessionFactory" ref="defaultSqlSessionFactory"/>
+  </bean>
+</beans>
