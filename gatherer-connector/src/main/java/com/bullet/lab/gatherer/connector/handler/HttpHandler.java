@@ -3,6 +3,7 @@ package com.bullet.lab.gatherer.connector.handler;
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;
 import com.bullet.lab.gatherer.connector.event.dispatcher.Dispatcher;
+import com.bullet.lab.gatherer.connector.pojo.MedicalData;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -11,7 +12,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.bullet.lab.gatherer.connector.base.pojo.MedicalData;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -27,13 +27,13 @@ import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
  */
 
 @ChannelHandler.Sharable
-public class DefaultHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final static Logger logger = LoggerFactory.getLogger(HttpHandler.class);
 
     private final Dispatcher dispatcher;
 
-    public DefaultHandler(Dispatcher dispatcher) {
+    public HttpHandler(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
     }
 
@@ -70,15 +70,16 @@ public class DefaultHandler extends SimpleChannelInboundHandler<FullHttpRequest>
         });
 
 
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
-                HttpResponseStatus.OK, Unpooled.wrappedBuffer("success!".getBytes("UTF-8")));
-        response.headers().set(CONTENT_TYPE, "text/plain");
-        response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
-        if (HttpHeaders.isKeepAlive(request)) {
-            response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-        }
-        ctx.writeAndFlush(response);
-        logger.debug("write response!");
+        //response
+//        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
+//                HttpResponseStatus.OK, Unpooled.wrappedBuffer("success!".getBytes("UTF-8")));
+//        response.headers().set(CONTENT_TYPE, "text/plain");
+//        response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
+//        if (HttpHeaders.isKeepAlive(request)) {
+//            response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+//        }
+//        ctx.writeAndFlush(response);
+//        logger.debug("write response!");
     }
 
 

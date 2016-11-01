@@ -1,4 +1,4 @@
-package com.bullet.lab.gatherer.connector.base.pojo;
+package com.bullet.lab.gatherer.connector.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

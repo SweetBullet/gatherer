@@ -5,13 +5,17 @@
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 
-    <bean id="launcher" class="com.bullet.lab.gatherer.connector.base.Launcher" init-method="init">
-        <property name="deliver" ref="defaultDeliver"/>
-        <property name="port" value="${medical.port}"/>
+    <bean id="httpLauncher" class="com.bullet.lab.gatherer.connector.base.HttpLauncher" init-method="init">
+        <property name="deliver" ref="httpDeliver"/>
+        <property name="port" value="${medical.http.port}"/>
     </bean>
 
-    <bean id="defaultDeliver" class="com.bullet.lab.gatherer.connector.deliver.DefaultDeliver">
+    <bean id="websocketLauncher" class="com.bullet.lab.gatherer.connector.base.WsLauncher" init-method="init">
+        <property name="deliver" ref="websocketDeliver"/>
+        <property name="port" value="${medical.ws.port}"/>
     </bean>
 
+    <bean id="httpDeliver" class="com.bullet.lab.gatherer.connector.deliver.HttpDeliver"/>
+    <bean id="websocketDeliver" class="com.bullet.lab.gatherer.connector.deliver.WsDeliver"/>
 
 </beans>
