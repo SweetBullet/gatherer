@@ -3,6 +3,7 @@ package com.bullet.lab.gatherer.connector.network.server;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -41,6 +42,7 @@ public abstract class NettyServer implements Server<ChannelInitializer<SocketCha
         this.port = port;
         bootstrap.group(boss, worker)
                 .channel(NioServerSocketChannel.class)
+                .option(ChannelOption.SO_BACKLOG,4096)
                 .childHandler(handler);
         logger.debug("netty server bind port {}", port);
     }

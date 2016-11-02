@@ -19,8 +19,7 @@ public class HttpServer extends NettyServer {
 
     @Override
     public void initBootstrap() {
-        bootstrap.option(ChannelOption.TCP_NODELAY, true)
-                .option(ChannelOption.SO_BACKLOG, 4096)
+        bootstrap.childOption(ChannelOption.TCP_NODELAY, true)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
     }
 }

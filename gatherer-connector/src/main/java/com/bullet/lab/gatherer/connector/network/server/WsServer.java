@@ -17,13 +17,11 @@ public class WsServer extends NettyServer {
         super.bind(port, handler);
     }
 
-
     @Override
     public void initBootstrap() {
-        bootstrap.channel(NioServerSocketChannel.class)
-                .option(ChannelOption.SO_KEEPALIVE, true)
-                .option(ChannelOption.TCP_NODELAY, true)
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
-                .option(ChannelOption.SO_TIMEOUT, 1000);
+        bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true)
+                .childOption(ChannelOption.TCP_NODELAY, true);
+//                .childOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
+//                .childOption(ChannelOption.SO_TIMEOUT, 1000);
     }
 }

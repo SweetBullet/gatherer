@@ -7,7 +7,6 @@ import com.bullet.lab.gatherer.connector.event.dispatcher.DispatcherExecutor;
 import com.bullet.lab.gatherer.connector.handler.HttpHandler;
 import com.bullet.lab.gatherer.connector.pojo.MedicalData;
 import com.bullet.lab.gatherer.dao.MedicalDataDao;
-import com.bullet.lab.gatherer.dao.entity.MedicalDataEntity;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.handler.codec.http.*;
@@ -98,20 +97,15 @@ public class HttpLauncher implements Closeable {
     public static void main(String[] args) {
         try {
             logger.debug("main method");
-
             final AbstractApplicationContext context = new ClassPathXmlApplicationContext("classpath*:META-INF/spring/application*.xml");
-
             context.start();
-
             Runtime.getRuntime().addShutdownHook(new Thread("shutdown-thread") {
-
                 @Override
                 public void run() {
                     System.out.println("closing connector");
                     context.close();
                 }
             });
-
         } catch (Exception e) {
             logger.error("start fail:", e);
             System.exit(-1);

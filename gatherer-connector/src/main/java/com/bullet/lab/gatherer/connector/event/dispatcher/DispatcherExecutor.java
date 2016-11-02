@@ -22,8 +22,11 @@ public class DispatcherExecutor implements Dispatcher {
 
     private static final int DEFAULT_THREAD_POOL_SIZE = 16;
 
+    private final Semaphore semaphore;
+
     public DispatcherExecutor() {
         next = new EventDispatcher();
+        semaphore = new Semaphore(DEFAULT_THREAD_POOL_SIZE);
     }
 
     private final ExecutorService executor = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE
@@ -37,8 +40,22 @@ public class DispatcherExecutor implements Dispatcher {
 
     @Override
     public void dispatch(EventType eventType, EventContext eventContext) {
-        executor.execute(() ->
-                next.dispatch(eventType, eventContext));
+        semaphore.acquireUninterruptibly();
+        try {
+            executor.execute(() -> {
+                try {
+                    next.dispatch(eventType, eventContext);
+                } catch (Exception e) {
+                    logger.error("executing error"+e);
+                } finally {
+                    semaphore.release();
+                }
+
+            });
+        } catch (RejectedExecutionException e){
+            semaphore.release();
+        }
+
     }
 
     @Override

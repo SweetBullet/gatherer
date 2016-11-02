@@ -12,15 +12,15 @@ public class PrivateServer extends NettyServer {
 
     @Override
     public void initBootstrap() {
-        bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
-        bootstrap.option(ChannelOption.TCP_NODELAY, true);
-        bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000);
-        bootstrap.option(ChannelOption.SO_TIMEOUT, 1000);
+        bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true)
+                .childOption(ChannelOption.TCP_NODELAY, true)
+                .childOption(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
+                .childOption(ChannelOption.SO_TIMEOUT, 1000);
     }
 
     @Override
     public void bind(int port, ChannelInitializer<SocketChannel> handler) {
         initBootstrap();
-        super.bind(port,handler);
+        super.bind(port, handler);
     }
 }

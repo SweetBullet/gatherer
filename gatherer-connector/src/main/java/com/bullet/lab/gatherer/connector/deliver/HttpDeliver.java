@@ -46,7 +46,7 @@ public class HttpDeliver implements Deliver<ChannelHandler> {
                 p.addLast(channelHandler);
             }
         });
-        logger.debug("transmiter bind port {}", port);
+        logger.debug("http deliver bind port {}", port);
     }
 
     public void close() throws IOException {

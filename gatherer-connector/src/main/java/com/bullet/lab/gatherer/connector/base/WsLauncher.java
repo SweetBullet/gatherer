@@ -39,6 +39,7 @@ public class WsLauncher implements Launcher {
 
     private void processConnect(EventContext context) {
         logger.debug("process connect event");
+        context.getChannel().writeAndFlush("connect success");
     }
 
     private void processReceive(EventContext context) {
@@ -63,4 +64,7 @@ public class WsLauncher implements Launcher {
     public void close() throws IOException {
         //// TODO: 16/11/1
     }
+
+
+
 }
