@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/gatherer.iml" filepath="$PROJECT_DIR$/gatherer.iml" />
       <module fileurl="file://$PROJECT_DIR$/gatherer-api/gatherer-api.iml" filepath="$PROJECT_DIR$/gatherer-api/gatherer-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/gatherer-connector/gatherer-connector.iml" filepath="$PROJECT_DIR$/gatherer-connector/gatherer-connector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gatherer-core/gatherer-core.iml" filepath="$PROJECT_DIR$/gatherer-core/gatherer-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/gatherer-dao/gatherer-dao.iml" filepath="$PROJECT_DIR$/gatherer-dao/gatherer-dao.iml" />
     </modules>
   </component>

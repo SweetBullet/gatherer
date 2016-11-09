@@ -1,8 +1,5 @@
 package com.bullet.lab.gatherer.connector.deliver;
 
-import com.bullet.lab.gatherer.connector.network.codec.GDecoder;
-import com.bullet.lab.gatherer.connector.network.codec.GEncoder;
-import com.bullet.lab.gatherer.connector.network.server.HttpServer;
 import com.bullet.lab.gatherer.connector.network.server.Server;
 import com.bullet.lab.gatherer.connector.network.server.WsServer;
 import io.netty.channel.Channel;
@@ -48,10 +45,10 @@ public class WsDeliver implements Deliver<ChannelHandler> {
             @Override
             protected void initChannel(SocketChannel socketChannel) throws Exception {
                 ChannelPipeline p = socketChannel.pipeline();
-                p.addLast("httpDecoder",new HttpResponseEncoder());
-                p.addLast("httpEncoder",new HttpRequestDecoder());
+                p.addLast("httpDecoder",new HttpRequestDecoder());
+                p.addLast("httpEncoder",new HttpResponseEncoder());
                 p.addLast("readIdlstate", new IdleStateHandler(20, 0, 0));//读超时
-                p.addLast("http-aggretator", new HttpObjectAggregator(1024 * 64));
+                p.addLast("http-aggretator", new HttpObjectAggregator(1024 * 64));// 组合HTTP报文为完整报文
                 p.addLast("websocket-protocal", new WebSocketServerProtocolHandler("/websocket", null, true));
                 p.addLast("websocket-handler",channelHandler);
                 p.addLast("http-chuncked", new ChunkedWriteHandler());//用于支持处理大数据流

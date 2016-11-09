@@ -1,6 +1,5 @@
-package com.bullet.lab.gatherer.connector.base.util;
+package com.bullet.lab.gatherer.connector.base;
 
-import com.bullet.lab.gatherer.connector.base.util.Serialization;
 import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
 import lombok.val;

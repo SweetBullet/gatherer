@@ -1,4 +1,4 @@
-package com.bullet.lab.gatherer.connector.base.util;
+package com.bullet.lab.gatherer.connector.base;
 
 import java.io.InputStream;
 import java.io.OutputStream;

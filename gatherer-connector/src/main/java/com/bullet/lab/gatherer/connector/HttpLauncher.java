@@ -1,4 +1,4 @@
-package com.bullet.lab.gatherer.connector.base;
+package com.bullet.lab.gatherer.connector;
 
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;

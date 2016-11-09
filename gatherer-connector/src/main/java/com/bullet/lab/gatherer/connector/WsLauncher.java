@@ -1,4 +1,4 @@
-package com.bullet.lab.gatherer.connector.base;
+package com.bullet.lab.gatherer.connector;
 
 import com.bullet.lab.gatherer.connector.deliver.WsDeliver;
 import com.bullet.lab.gatherer.connector.deliver.Deliver;
@@ -9,6 +9,7 @@ import com.bullet.lab.gatherer.connector.event.dispatcher.DispatcherExecutor;
 import com.bullet.lab.gatherer.connector.handler.WsHandler;
 import com.bullet.lab.gatherer.connector.pojo.MedicalData;
 import io.netty.channel.ChannelHandler;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,7 @@ public class WsLauncher implements Launcher {
 
     private void processConnect(EventContext context) {
         logger.debug("process connect event");
-        context.getChannel().writeAndFlush("connect success");
+        context.getChannel().writeAndFlush(new TextWebSocketFrame("{\"connect\":\"success\"}"));
     }
 
     private void processReceive(EventContext context) {

@@ -1,11 +1,10 @@
 package com.bullet.lab.gatherer.connector.handler;
 
-import com.bullet.lab.gatherer.connector.base.util.GsonSerialization;
-import com.bullet.lab.gatherer.connector.base.util.Serialization;
+import com.bullet.lab.gatherer.connector.base.GsonSerialization;
+import com.bullet.lab.gatherer.connector.base.Serialization;
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;
 import com.bullet.lab.gatherer.connector.event.dispatcher.Dispatcher;
-import com.bullet.lab.gatherer.connector.network.command.Command;
 import com.bullet.lab.gatherer.connector.pojo.MedicalData;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -35,7 +34,7 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws Exception {
 
-        logger.debug("receive msg!");
+        logger.debug("receive msg:", frame);
 
         dispatcher.dispatch(EventType.receive, new EventContext() {
             @Override
@@ -45,8 +44,9 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
             @Override
             public MedicalData getData() {
-                String data=frame.text();
-                logger.debug("data in frame:",data);
+                ctx.writeAndFlush(new TextWebSocketFrame("{\"result\":\"success\"}"));
+                String data = frame.text();
+                logger.debug("data in frame:", data);
                 return serialization.deserialize2Object(data, MedicalData.class);
             }
         });
@@ -83,7 +83,6 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
             }
         });
     }
-
 
 
     @Override

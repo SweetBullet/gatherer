@@ -9,22 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gatherer-connector</artifactId>
+    <artifactId>gatherer-core</artifactId>
+
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.bullet.lab</groupId>
-            <artifactId>gatherer-dao</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-
-        <!--netty-->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
-
         <!--log-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -75,14 +63,5 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
-
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-
-
     </dependencies>
-
 </project>

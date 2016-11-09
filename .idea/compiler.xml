@@ -25,6 +25,7 @@
         <processorPath useClasspath="true" />
         <module name="gatherer-api" />
         <module name="gatherer-connector" />
+        <module name="gatherer-core" />
         <module name="gatherer-dao" />
       </profile>
     </annotationProcessing>
@@ -32,6 +33,7 @@
       <module name="gatherer" target="1.5" />
       <module name="gatherer-api" target="1.8" />
       <module name="gatherer-connector" target="1.8" />
+      <module name="gatherer-core" target="1.8" />
       <module name="gatherer-dao" target="1.8" />
     </bytecodeTargetLevel>
   </component>

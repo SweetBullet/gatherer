@@ -12,6 +12,7 @@
         <module>gatherer-api</module>
         <module>gatherer-connector</module>
         <module>gatherer-dao</module>
+        <module>gatherer-core</module>
     </modules>
 
 

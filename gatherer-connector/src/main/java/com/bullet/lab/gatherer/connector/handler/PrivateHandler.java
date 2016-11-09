@@ -1,7 +1,7 @@
 package com.bullet.lab.gatherer.connector.handler;
 
-import com.bullet.lab.gatherer.connector.base.util.GsonSerialization;
-import com.bullet.lab.gatherer.connector.base.util.Serialization;
+import com.bullet.lab.gatherer.connector.base.GsonSerialization;
+import com.bullet.lab.gatherer.connector.base.Serialization;
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;
 import com.bullet.lab.gatherer.connector.event.dispatcher.Dispatcher;

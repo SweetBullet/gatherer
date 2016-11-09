@@ -5,12 +5,12 @@
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 
-    <bean id="httpLauncher" class="com.bullet.lab.gatherer.connector.base.HttpLauncher" init-method="init">
+    <bean id="httpLauncher" class="com.bullet.lab.gatherer.connector.HttpLauncher" init-method="init">
         <property name="deliver" ref="httpDeliver"/>
         <property name="port" value="${medical.http.port}"/>
     </bean>
 
-    <bean id="wsLauncher" class="com.bullet.lab.gatherer.connector.base.WsLauncher" init-method="init">
+    <bean id="wsLauncher" class="com.bullet.lab.gatherer.connector.WsLauncher" init-method="init">
         <property name="deliver" ref="wsDeliver"/>
         <property name="port" value="${medical.ws.port}"/>
     </bean>
