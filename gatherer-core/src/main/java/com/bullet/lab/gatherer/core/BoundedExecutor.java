@@ -11,10 +11,10 @@ import java.util.concurrent.*;
 public class BoundedExecutor implements Executor, AutoCloseable {
 
     private final static Logger logger = LoggerFactory.getLogger(BoundedExecutor.class);
-    private final Executor executor;
+    private final ExecutorService executor;
     private final Semaphore semaphore;
 
-    public BoundedExecutor(Executor executor, int bound) {
+    public BoundedExecutor(ExecutorService executor, int bound) {
         this.executor = executor;
         this.semaphore = new Semaphore(bound);
     }
@@ -42,13 +42,11 @@ public class BoundedExecutor implements Executor, AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        if (this.executor instanceof ExecutorService) {
-            ((ExecutorService) this.executor).shutdown();
-            boolean isShutDown = ((ExecutorService) this.executor).awaitTermination(60, TimeUnit.SECONDS);
-            if (!isShutDown) {
-                logger.warn("waiting executor shutdown timeout!");
-                ((ExecutorService) this.executor).shutdownNow();
-            }
+        executor.shutdown();
+        boolean isShutDown = this.executor.awaitTermination(60, TimeUnit.SECONDS);
+        if (!isShutDown) {
+            logger.warn("waiting executor shutdown timeout!");
+            executor.shutdownNow();
         }
     }
 }
