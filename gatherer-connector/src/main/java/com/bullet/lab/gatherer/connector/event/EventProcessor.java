@@ -1,6 +1,5 @@
-package com.bullet.lab.gatherer.connector.event.processor;
+package com.bullet.lab.gatherer.connector.event;
 
-import com.bullet.lab.gatherer.connector.event.EventContext;
 
 /**
  * Created by pudongxu on 16/10/26.

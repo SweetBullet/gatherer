@@ -38,7 +38,7 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
         dispatcher.dispatch(EventType.receive, new EventContext() {
             @Override
-            public Channel getChannel() {
+            public Channel channel() {
                 return ctx.channel();
             }
 
@@ -50,6 +50,8 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
                 return serialization.deserialize2Object(data, MedicalData.class);
             }
         });
+
+        ctx.channel().writeAndFlush(new TextWebSocketFrame("{\"connect\":\"success\"}"));
     }
 
     @Override
@@ -57,7 +59,7 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
         logger.debug("websocket connection build");
         dispatcher.dispatch(EventType.connecting, new EventContext() {
             @Override
-            public Channel getChannel() {
+            public Channel channel() {
                 return ctx.channel();
             }
 
@@ -73,7 +75,7 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         dispatcher.dispatch(EventType.disconnected, new EventContext() {
             @Override
-            public Channel getChannel() {
+            public Channel channel() {
                 return ctx.channel();
             }
 

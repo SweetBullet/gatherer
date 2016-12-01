@@ -1,5 +1,6 @@
 package com.bullet.lab.gatherer.connector.handler;
 
+import com.bullet.lab.gatherer.connector.base.RequestType;
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;
 import com.bullet.lab.gatherer.connector.event.dispatcher.Dispatcher;
@@ -41,34 +42,33 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
 
         logger.debug("receive data:{}", request);
-
-        if (!request.getDecoderResult().isSuccess()) {
+        if (!request.getDecoderResult().isSuccess())
             return;
-        }
-        if (request.getMethod() != HttpMethod.GET) {
-            return;
-        }
-
         String uriString = request.getUri();
         URI uri = new URI(uriString);
         String path = uri.getPath();
         logger.debug("request path:{}", path);
         Map<String, String> map = this.getRequest(request);
         logger.debug("the request is:{}", map);
-
-        MedicalData data = new MedicalData(map.get("name"), map.get("phone"));
         dispatcher.dispatch(EventType.receive, new EventContext() {
             @Override
-            public Channel getChannel() {
+            public Channel channel() {
                 return ctx.channel();
             }
 
             @Override
-            public MedicalData getData() {
-                return data;
-            }
-        });
+            public RequestType reqType() {return RequestType.valueOf(map.get("reqType"));}
 
+            @Override
+            public String method() {return request.getMethod().name();}
+
+            @Override
+            public String path() {return path;}
+
+            @Override
+            public Map<String, String> params() {return map;}
+
+        });
 
         //response
 //        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
@@ -88,12 +88,17 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
         logger.debug("connection build");
         dispatcher.dispatch(EventType.connecting, new EventContext() {
             @Override
-            public Channel getChannel() {
+            public Channel channel() {
                 return ctx.channel();
             }
 
             @Override
-            public MedicalData getData() {
+            public String method() {
+                return null;
+            }
+
+            @Override
+            public String path() {
                 return null;
             }
         });
@@ -104,14 +109,15 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         dispatcher.dispatch(EventType.disconnected, new EventContext() {
             @Override
-            public Channel getChannel() {
+            public Channel channel() {
                 return ctx.channel();
             }
 
             @Override
-            public MedicalData getData() {
-                return null;
-            }
+            public String method() {return null;}
+
+            @Override
+            public String path() {return null;}
         });
     }
 

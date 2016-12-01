@@ -2,7 +2,7 @@ package com.bullet.lab.gatherer.connector.event.dispatcher;
 
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;
-import com.bullet.lab.gatherer.connector.event.processor.EventProcessor;
+import com.bullet.lab.gatherer.connector.event.EventProcessor;
 
 import java.io.Closeable;
 

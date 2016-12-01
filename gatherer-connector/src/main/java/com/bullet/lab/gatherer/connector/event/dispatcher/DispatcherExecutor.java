@@ -2,7 +2,7 @@ package com.bullet.lab.gatherer.connector.event.dispatcher;
 
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;
-import com.bullet.lab.gatherer.connector.event.processor.EventProcessor;
+import com.bullet.lab.gatherer.connector.event.EventProcessor;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,13 +46,14 @@ public class DispatcherExecutor implements Dispatcher {
                 try {
                     next.dispatch(eventType, eventContext);
                 } catch (Exception e) {
-                    logger.error("executing error"+e);
+                    logger.error("executing error" + e);
                 } finally {
                     semaphore.release();
                 }
 
             });
-        } catch (RejectedExecutionException e){
+        } catch (RejectedExecutionException e) {
+            logger.error("queue of executor pool is full:", e);
             semaphore.release();
         }
 
@@ -65,8 +66,8 @@ public class DispatcherExecutor implements Dispatcher {
         try {
             boolean isTerminated = executor.awaitTermination(60, TimeUnit.SECONDS);
             if (isTerminated) {
-                executor.shutdownNow();
                 logger.warn(" dispatcher excutor shutdown timeout!");
+                executor.shutdownNow();
             }
         } catch (InterruptedException e) {
             executor.shutdownNow();

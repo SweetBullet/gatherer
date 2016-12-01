@@ -34,7 +34,7 @@ public class PrivateHandler extends SimpleChannelInboundHandler<Command> {
         if (type == Command.CommandType.query) {
             dispatcher.dispatch(EventType.receive, new EventContext() {
                 @Override
-                public Channel getChannel() {
+                public Channel channel() {
                     return channelHandlerContext.channel();
                 }
 

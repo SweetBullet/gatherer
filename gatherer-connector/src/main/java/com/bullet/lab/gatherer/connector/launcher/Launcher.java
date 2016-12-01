@@ -1,4 +1,4 @@
-package com.bullet.lab.gatherer.connector;
+package com.bullet.lab.gatherer.connector.launcher;
 
 import java.io.Closeable;
 
