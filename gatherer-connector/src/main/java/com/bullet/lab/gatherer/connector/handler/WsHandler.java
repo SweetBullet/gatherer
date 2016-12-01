@@ -42,13 +42,13 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
                 return ctx.channel();
             }
 
-            @Override
-            public MedicalData getData() {
-                ctx.writeAndFlush(new TextWebSocketFrame("{\"result\":\"success\"}"));
-                String data = frame.text();
-                logger.debug("data in frame:", data);
-                return serialization.deserialize2Object(data, MedicalData.class);
-            }
+//            @Override
+//            public MedicalData getData() {
+//                ctx.writeAndFlush(new TextWebSocketFrame("{\"result\":\"success\"}"));
+//                String data = frame.text();
+//                logger.debug("data in frame:", data);
+//                return serialization.deserialize2Object(data, MedicalData.class);
+//            }
         });
 
         ctx.channel().writeAndFlush(new TextWebSocketFrame("{\"connect\":\"success\"}"));
@@ -63,10 +63,6 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
                 return ctx.channel();
             }
 
-            @Override
-            public MedicalData getData() {
-                return null;
-            }
         });
     }
 
@@ -79,10 +75,6 @@ public class WsHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
                 return ctx.channel();
             }
 
-            @Override
-            public MedicalData getData() {
-                return null;
-            }
         });
     }
 

@@ -4,6 +4,7 @@ import com.bullet.lab.gatherer.connector.base.RequestType;
 import com.bullet.lab.gatherer.connector.event.EventContext;
 import com.bullet.lab.gatherer.connector.event.EventType;
 import com.bullet.lab.gatherer.connector.event.dispatcher.Dispatcher;
+import com.bullet.lab.gatherer.connector.manager.HttpRequestParam;
 import com.bullet.lab.gatherer.connector.pojo.MedicalData;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -57,16 +58,14 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
             }
 
             @Override
-            public RequestType reqType() {return RequestType.valueOf(map.get("reqType"));}
+            public RequestType reqType() {
+                return RequestType.valueOf(map.get("reqType"));
+            }
 
             @Override
-            public String method() {return request.getMethod().name();}
-
-            @Override
-            public String path() {return path;}
-
-            @Override
-            public Map<String, String> params() {return map;}
+            public HttpRequestParam httpParam() {
+                return new HttpRequestParam(request.getMethod().name(), path, "", map);
+            }
 
         });
 
@@ -91,16 +90,6 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
             public Channel channel() {
                 return ctx.channel();
             }
-
-            @Override
-            public String method() {
-                return null;
-            }
-
-            @Override
-            public String path() {
-                return null;
-            }
         });
     }
 
@@ -113,11 +102,6 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
                 return ctx.channel();
             }
 
-            @Override
-            public String method() {return null;}
-
-            @Override
-            public String path() {return null;}
         });
     }
 
